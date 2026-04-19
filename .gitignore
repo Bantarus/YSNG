@@ -17,6 +17,7 @@ apm/
 !.claude/skills/apm-packaging/
 !.claude/skills/apm-cli/
 !.claude/skills/apm-distribution/
+!.claude/skills/skill-creator/
 
 # Tests (internal framework validation)
 tests/

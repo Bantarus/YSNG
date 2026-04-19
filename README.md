@@ -2,7 +2,7 @@
   <img src="docs/masthead.svg" alt="Your Skills Need a Guardian — a continuously improving framework" width="100%">
 </p>
 
-A framework that creates continuously improving guardian agents for your Claude Code skills. The guardian reviews your code, analyses your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use. Three things improve simultaneously: the skills, the guardian, and your workflow.
+A framework that creates continuously improving guardian agents for your Claude Code skills. The guardian reviews your code, analyses your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use under your supervision. Three things improve simultaneously: the skills, the guardian, and your workflow.
 
 You already have skills. But are they getting better?
 
@@ -107,9 +107,10 @@ Clone the repo and work inside it:
 git clone https://github.com/Bantarus/YSNG.git
 cd YSNG
 
-# Install VCC (required)
-git clone https://github.com/lllyasviel/VCC.git ~/.vcc
-cp -r ~/.vcc/skills/* ~/.claude/skills/
+# Install VCC (required for L2 trace analysis)
+git clone https://github.com/lllyasviel/VCC.git /tmp/vcc-install
+cp -r /tmp/vcc-install/skills/* ~/.claude/skills/
+rm -rf /tmp/vcc-install
 
 # Optional: install APM for packaging
 curl -sSL https://aka.ms/apm-unix | sh
@@ -121,7 +122,7 @@ This gives you the complete framework: skills-forge (skill builder) → guardian
 
 | Dependency | Required for | Install |
 |---|---|---|
-| [VCC](https://github.com/lllyasviel/VCC) | Guardian trace analysis (Mode 2) | `git clone` + copy skills |
+| [VCC](https://github.com/lllyasviel/VCC) | Guardian trace analysis (L2) | `git clone` + copy skills |
 | Python 3.10+ | VCC | System package manager |
 | [APM](https://github.com/microsoft/apm) | Path 1 install + packaging | `curl -sSL https://aka.ms/apm-unix \| sh` |
 
@@ -148,7 +149,10 @@ apm.yml                            # Package manifest (enables apm install)
 External skills (install separately):
 
 - `conversation-compiler` — from [VCC](https://github.com/lllyasviel/VCC), preloaded by guardian-nurturer
-- `skill-creator` — official Anthropic skill writing guide, preloaded by skills-forge
+
+Bundled skills:
+
+- `skill-creator` — official Anthropic skill writing guide (Apache 2.0), preloaded by skills-forge
 
 ---
 
