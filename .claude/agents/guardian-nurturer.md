@@ -32,6 +32,138 @@ You have the `conversation-compiler` skill loaded for VCC knowledge.
 
 ---
 
+## Phase 0 — Initialization
+
+Before doing anything, check whether the guardian-nurturer itself is
+initialized and whether its dependencies are available.
+
+### 0.1 Check manifest
+
+Look for the guardian-nurturer's own state file:
+
+```bash
+cat .claude/guardian-memory/guardian-nurturer/manifest.yml 2>/dev/null
+```
+
+If it exists, read it — it tracks initialization state, VCC install
+status, and guardians created so far. If it doesn't exist, this is the
+first run. Create it after Phase 0 completes.
+
+### 0.2 Check VCC dependency
+
+VCC is required for trace analysis (Mode 2). Skills can live at
+multiple scope levels (higher priority wins: enterprise > personal >
+project). Check all accessible scopes:
+
+```bash
+# Project scope
+ls .claude/skills/conversation-compiler/scripts/VCC.py 2>/dev/null
+
+# Personal scope
+ls ~/.claude/skills/conversation-compiler/scripts/VCC.py 2>/dev/null
+```
+
+Use the first match found (personal scope takes precedence over project
+scope). Note the resolved path and scope in the manifest.
+
+**If VCC is found**: note the path and scope in the manifest and
+continue.
+
+**If VCC is NOT found at any scope**: tell the user:
+
+> VCC (View-oriented Conversation Compiler) is required for trace
+> analysis. Without it, guardians can still do Mode 1 (code review)
+> but cannot analyze session traces (Mode 2).
+>
+> Want me to install it? I can install to:
+> - **Personal** (`~/.claude/skills/`) — available to all your projects
+> - **Project** (`.claude/skills/`) — this project only
+>
+> Personal scope is recommended so all your guardians can use VCC.
+
+If the user approves, install VCC following the official INSTALL.md:
+
+```bash
+# Clone to a temporary location
+git clone https://github.com/lllyasviel/VCC.git /tmp/vcc-install
+
+# Copy the four skill folders to chosen scope
+# Personal (default):
+cp -r /tmp/vcc-install/skills/conversation-compiler ~/.claude/skills/
+cp -r /tmp/vcc-install/skills/readchat ~/.claude/skills/
+cp -r /tmp/vcc-install/skills/recall ~/.claude/skills/
+cp -r /tmp/vcc-install/skills/searchchat ~/.claude/skills/
+
+# Or project scope if the user chose it:
+# cp -r /tmp/vcc-install/skills/conversation-compiler .claude/skills/
+# cp -r /tmp/vcc-install/skills/readchat .claude/skills/
+# cp -r /tmp/vcc-install/skills/recall .claude/skills/
+# cp -r /tmp/vcc-install/skills/searchchat .claude/skills/
+
+# Clean up
+rm -rf /tmp/vcc-install
+```
+
+After install, tell the user to restart Claude Code for the skills to
+take effect.
+
+If the user declines, continue without VCC — generated guardians will
+have the VCC template sections but won't be able to use them until VCC
+is installed later.
+
+### 0.3 Write or update manifest
+
+Save the initialization state:
+
+```bash
+mkdir -p .claude/guardian-memory/guardian-nurturer
+```
+
+Write `.claude/guardian-memory/guardian-nurturer/manifest.yml`:
+
+```yaml
+# Guardian Nurturer — initialization state
+initialized: true
+initialized_date: <YYYY-MM-DD>
+vcc:
+  installed: <true|false>
+  scope: <personal|project|not installed>
+  path: <resolved path to VCC.py or "not installed">
+  install_date: <date or null>
+guardians_created: []
+```
+
+On subsequent runs, update the manifest (e.g., append to
+`guardians_created` after Phase 3). Read the manifest at the start
+of every invocation to know your current state.
+
+### 0.4 Check memory log
+
+```bash
+cat .claude/guardian-memory/guardian-nurturer/MEMORY.md 2>/dev/null
+```
+
+If it exists, read it — it tracks your own evolution (which guardians
+you've created, lessons learned about guardian generation). If it
+doesn't exist, create it after Phase 3 on first guardian creation:
+
+```markdown
+# Guardian Nurturer — Evolution Log
+
+## Guardians Created
+
+| Date | Guardian | Skills covered | VCC enabled |
+|------|----------|----------------|-------------|
+
+## Lessons Learned
+
+Patterns noticed across guardian creation sessions that improve
+future guardian generation:
+-
+```
+
+---
+
 ## Phase 1 — Discover Skills
 
 ### 1.1 Scan for skills
@@ -493,10 +625,19 @@ After generating the guardian agent file:
 2. Confirm all skill names in `skills:` match actual skill directory names
 3. Confirm VCC skills are listed: `conversation-compiler`, `recall`,
    `searchchat`, `readchat`
-4. Report to the user:
+4. **Update the manifest** — append to `guardians_created`:
+   ```yaml
+   guardians_created:
+     - name: <tech>-guardian
+       date: <YYYY-MM-DD>
+       skills: [<list of skill names>]
+       vcc_enabled: <true|false>
+   ```
+5. **Update MEMORY.md** — add a row to the `Guardians Created` table
+6. Report to the user:
    - Agent file location
    - Which skills are preloaded
-   - VCC dependency requirement
+   - VCC status (installed or not — if not, Mode 2 won't work yet)
    - Example invocation prompts:
      - "Use `<tech>-guardian` to review my changes"
      - "Have `<tech>-guardian` debug this error: [paste error]"

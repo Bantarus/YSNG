@@ -1,33 +1,22 @@
-# Your Skills Need a Guardian
+<p align="center">
+  <img src="docs/masthead.svg" alt="Your Skills Need a Guardian — a self-improving framework" width="100%">
+</p>
 
-*Fabricando fit faber* — By making, one becomes a maker.
-
-A framework that creates self-improving guardian agents for your Claude Code skills. The guardian reviews your code, analyzes your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use. Three things improve simultaneously: the skills, the guardian, and your workflow.
+A framework that creates self-improving guardian agents for your Claude Code skills. The guardian reviews your code, analyses your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use. Three things improve simultaneously: the skills, the guardian, and your workflow.
 
 You already have skills. But are they getting better?
 
+---
 
 ## How it works
 
-```
-   You have skills (from any source)
-          ↓
-   Guardian Nurturer creates a tailored guardian
-          ↓
-   You work with your main LLM
-   (skills provide context)
-          ↓
-   You invoke the guardian on-demand
-          ↓
-   Guardian analyzes your session via VCC:
-     • patches skills (better LLM context)
-     • updates its own checklist & grep patterns
-       (sharper quality gate)
-          ↓
-   Next session benefits from both improvements
-          ↓
-   Repeat — fabricando fit faber
-```
+<p align="center">
+  <img src="docs/feedback-loop.svg" alt="Three-phase feedback loop: work, review, improve" width="100%">
+</p>
+
+You work with your main LLM while skills provide context. When you invoke the guardian, it compiles the session's JSONL reasoning trace via VCC and does two things at once: it patches the skills so the next session has better context, and it sharpens itself by adding new checklist items and grep patterns. Both improvements carry forward. The next session starts from a slightly smarter baseline than the last. That's the loop.
+
+---
 
 ## Agents
 
@@ -35,41 +24,37 @@ The framework has four agents with distinct roles:
 
 | Agent | Role | When to use |
 |-------|------|-------------|
-| **guardian-nurturer** | Creates self-improving guardians for any skills | "Create a guardian for these skills" |
-| **skills-forge** | Builds skills from documentation sources (optional) | "Build skills from the docs at [path]" |
-| **agent-packager** | Packages skills + guardian for APM distribution | "Package this for distribution" |
-| **\<tech\>-guardian** | Quality gate + skill/self improvement (generated) | "Review my code", "Analyze my last session" |
+| **guardian-nurturer** | Creates self-improving guardians for any skills | *"Create a guardian for these skills"* |
+| **skills-forge** | Builds skills from documentation sources (optional) | *"Build skills from the docs at [path]"* |
+| **agent-packager** | Packages skills + guardian for APM distribution | *"Package this for distribution"* |
+| **\<tech\>-guardian** | Quality gate + skill/self improvement (generated) | *"Review my code"*, *"Analyse my last session"* |
 
 **guardian-nurturer** is the core. skills-forge is optional — use it if you need to build skills from docs, or bring your own skills from any source.
 
-## The guardian — self-improving quality gate
+---
 
-Each guardian has two modes:
+## The guardian — a self-improving quality gate
 
-**Mode 1 — Code Review**: Validates implementations against preloaded skill knowledge. Catches API misuse, hallucinated methods, lifecycle errors, and known gotchas.
+<p align="center">
+  <img src="docs/guardian-modes.svg" alt="The guardian's two modes: code review and trace analysis" width="100%">
+</p>
 
-**Mode 2 — Trace Analysis & Self-Improvement**: Uses VCC to compile and navigate the session's JSONL reasoning trace. Produces:
+Each guardian carries two types of checks:
 
-1. Skill gap analysis with concrete patches
-2. CLAUDE.md recommendations
-3. **Guardian self-updates** — new checklist items and VCC grep patterns learned from the session
+- **Base checks** — derived from skills. Editable when the skills are corrected.
+- **Learned checks** — accumulated through trace analysis. Append-only.
 
-The guardian has two types of checks:
-- **Base checks** — derived from skills, editable when skills are corrected
-- **Learned checks** — accumulated through trace analysis, append-only
+Both the skills and the guardian improve through use. Mode 2 produces a skill gap analysis with concrete patches, CLAUDE.md recommendations, guardian self-updates (new checklist items and VCC grep patterns), and ecosystem growth — commands, scripts, hooks, and analysis tools that the guardian creates when it spots repeated patterns.
 
-Both the skills and the guardian improve through use.
+---
 
 ## Optional: skill building
 
-Don't have skills yet? skills-forge builds them from local documentation
-sources (local paths or git repos). No web scraping — `git clone` is the
-only allowed network operation. But you can also bring skills from any
-source: hand-written, community repos, other skill builders.
+Don't have skills yet? **skills-forge** builds them from local documentation sources (local paths or git repos). No web scraping — `git clone` is the only allowed network operation. You can also bring skills from any source: hand-written, community repos, other skill builders.
 
 ## Optional: APM packaging
 
-agent-packager produces [APM](https://github.com/microsoft/apm)-compatible packages:
+**agent-packager** produces [APM](https://github.com/microsoft/apm)-compatible packages:
 
 ```
 .claude/skill-packages/<tech>/
@@ -84,9 +69,11 @@ agent-packager produces [APM](https://github.com/microsoft/apm)-compatible packa
 
 Consumers install via `apm install`, get skills + guardian, and evolve their local copy through use.
 
+---
+
 ## Installation
 
-Two paths depending on what you need:
+Two paths depending on what you need.
 
 ### Path 1 — I already have skills, I just want a guardian
 
@@ -133,27 +120,32 @@ This gives you the complete framework: skills-forge (skill builder) → guardian
 | Python 3.10+ | VCC | System package manager |
 | [APM](https://github.com/microsoft/apm) | Path 1 install + packaging | `curl -sSL https://aka.ms/apm-unix \| sh` |
 
+---
+
 ## Project structure (Path 2 — full clone)
 
 ```
 .claude/
   agents/
     guardian-nurturer.md           # Core — creates guardians for any skills
-    skills-forge.md              # Optional — builds skills from docs
-    agent-packager.md           # APM packaging specialist
+    skills-forge.md                # Optional — builds skills from docs
+    agent-packager.md              # APM packaging specialist
   skills/
-    apm-packaging/              # APM manifest schema (preloaded by agent-packager)
-    apm-cli/                    # APM CLI reference (preloaded by agent-packager)
-    apm-distribution/           # APM distribution (preloaded by agent-packager)
+    apm-packaging/                 # APM manifest schema (preloaded by agent-packager)
+    apm-cli/                       # APM CLI reference (preloaded by agent-packager)
+    apm-distribution/              # APM distribution (preloaded by agent-packager)
 .apm/
   agents/
     guardian-nurturer.agent.md     # APM-deployable copy (for Path 1 consumers)
-apm.yml                         # Package manifest (enables apm install)
+apm.yml                            # Package manifest (enables apm install)
 ```
 
 External skills (install separately):
+
 - `conversation-compiler` — from [VCC](https://github.com/lllyasviel/VCC), preloaded by guardian-nurturer
 - `skill-creator` — official Anthropic skill writing guide, preloaded by skills-forge
+
+---
 
 ## Usage
 
@@ -189,6 +181,8 @@ The LLM got this wrong — have the guardian fix the skill
 ```
 Package the <tech> skills for APM distribution
 ```
+
+---
 
 ## License
 
