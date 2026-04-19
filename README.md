@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/masthead.svg" alt="Your Skills Need a Guardian — a self-improving framework" width="100%">
+  <img src="docs/masthead.svg" alt="Your Skills Need a Guardian — a continuously improving framework" width="100%">
 </p>
 
-A framework that creates self-improving guardian agents for your Claude Code skills. The guardian reviews your code, analyses your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use. Three things improve simultaneously: the skills, the guardian, and your workflow.
+A framework that creates continuously improving guardian agents for your Claude Code skills. The guardian reviews your code, analyses your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use. Three things improve simultaneously: the skills, the guardian, and your workflow.
 
 You already have skills. But are they getting better?
 
@@ -14,7 +14,12 @@ You already have skills. But are they getting better?
   <img src="docs/feedback-loop.svg" alt="Three-phase feedback loop: work, review, improve" width="100%">
 </p>
 
-You work with your main LLM while skills provide context. When you invoke the guardian, it compiles the session's JSONL reasoning trace via VCC and does two things at once: it patches the skills so the next session has better context, and it sharpens itself by adding new checklist items and grep patterns. Both improvements carry forward. The next session starts from a slightly smarter baseline than the last. That's the loop.
+You work with your main LLM while skills provide context. The guardian has two levels:
+
+- **L1 — Code review**: validates your code against the preloaded skill knowledge. Catches API misuse, hallucinated methods, lifecycle errors.
+- **L2 — Trace analysis**: compiles the session's JSONL reasoning trace via VCC, identifies skill gaps, patches the skills, and sharpens its own checklist and grep patterns.
+
+You can invoke L1 and let it escalate to L2 if issues are found, or invoke L2 directly with your own context. The improvement loop runs at L2 — each cycle leaves both the skills and the guardian slightly sharper than before.
 
 ---
 
@@ -24,7 +29,7 @@ The framework has four agents with distinct roles:
 
 | Agent | Role | When to use |
 |-------|------|-------------|
-| **guardian-nurturer** | Creates self-improving guardians for any skills | *"Create a guardian for these skills"* |
+| **guardian-nurturer** | Creates continuously improving guardians for any skills | *"Create a guardian for these skills"* |
 | **skills-forge** | Builds skills from documentation sources (optional) | *"Build skills from the docs at [path]"* |
 | **agent-packager** | Packages skills + guardian for APM distribution | *"Package this for distribution"* |
 | **\<tech\>-guardian** | Quality gate + skill/self improvement (generated) | *"Review my code"*, *"Analyse my last session"* |
@@ -33,7 +38,7 @@ The framework has four agents with distinct roles:
 
 ---
 
-## The guardian — a self-improving quality gate
+## The guardian — a continuously improving quality gate
 
 <p align="center">
   <img src="docs/guardian-modes.svg" alt="The guardian's two modes: code review and trace analysis" width="100%">
@@ -44,7 +49,7 @@ Each guardian carries two types of checks:
 - **Base checks** — derived from skills. Editable when the skills are corrected.
 - **Learned checks** — accumulated through trace analysis. Append-only.
 
-Both the skills and the guardian improve through use. Mode 2 produces a skill gap analysis with concrete patches, CLAUDE.md recommendations, guardian self-updates (new checklist items and VCC grep patterns), and ecosystem growth — commands, scripts, hooks, and analysis tools that the guardian creates when it spots repeated patterns.
+Both the skills and the guardian improve through use. Level 2 produces a skill gap analysis with concrete patches, CLAUDE.md recommendations, guardian self-updates (new checklist items and VCC grep patterns), and ecosystem growth — commands, scripts, hooks, and analysis tools that the guardian creates when it spots repeated patterns.
 
 ---
 
@@ -85,7 +90,7 @@ curl -sSL https://aka.ms/apm-unix | sh     # macOS/Linux
 irm https://aka.ms/apm-windows | iex       # Windows
 
 # Install guardian-nurturer into your project
-apm install <org>/guardian-nurturer
+apm install Bantarus/YSNG
 
 # Install VCC (required for trace analysis)
 git clone https://github.com/lllyasviel/VCC.git ~/.vcc
@@ -99,8 +104,8 @@ This deploys `guardian-nurturer.md` to your project's `.claude/agents/`. Point i
 Clone the repo and work inside it:
 
 ```bash
-git clone <org>/guardian-nurturer
-cd guardian-nurturer
+git clone https://github.com/Bantarus/YSNG.git
+cd YSNG
 
 # Install VCC (required)
 git clone https://github.com/lllyasviel/VCC.git ~/.vcc

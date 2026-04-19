@@ -1,0 +1,23 @@
+<svg width="100%" viewBox="0 0 680 200" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Your Skills Need a Guardian — masthead</title>
+  <desc>Editorial masthead for the project README.</desc>
+
+  <line x1="40" y1="40" x2="40" y2="140" stroke="#b87520" stroke-width="2"/>
+
+  <g transform="translate(60, 40)">
+    <circle cx="8" cy="8" r="6" fill="none" stroke="#b87520" stroke-width="1.1"/>
+    <path d="M 11.5 3.5 L 15 5.5 L 13 8.5 Z" fill="#b87520"/>
+  </g>
+
+  <text x="90" y="52" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="10" fill="#b87520" letter-spacing="3">A CONTINUOUSLY IMPROVING FRAMEWORK</text>
+
+  <text x="60" y="94" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="400" fill="#5a5a5a">Your Skills Need</text>
+  <text x="60" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="400" fill="#5a5a5a">a <tspan font-style="italic" fill="#b87520">Guardian</tspan>.</text>
+
+  <line x1="60" y1="152" x2="200" y2="152" stroke="#d8d8d8" stroke-width="0.5"/>
+
+  <text x="60" y="172" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#8a8a8a">Guardians that review your code, analyse your reasoning traces,</text>
+  <text x="60" y="189" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#8a8a8a">and patch the skills they're protecting.</text>
+
+  <text x="640" y="185" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="12" fill="#b87520" letter-spacing="1">fabricando fit faber</text>
+</svg>

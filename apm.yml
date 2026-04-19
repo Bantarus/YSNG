@@ -1,6 +1,6 @@
 name: guardian-nurturer
 version: 1.0.0
-description: "Your Skills Need a Guardian — self-improving guardian agents for Claude Code skills"
+description: "Your Skills Need a Guardian — continuously improving guardian agents for Claude Code skills"
 author: Bantarus
 license: MIT
 type: hybrid

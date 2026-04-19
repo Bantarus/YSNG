@@ -1,0 +1,66 @@
+<svg width="100%" viewBox="0 0 680 460" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>The Guardian feedback loop</title>
+  <desc>Work phase produces code + trace. Guardian reviews code (Level 1), can escalate to trace analysis (Level 2) which improves skills and itself.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Phase 1: WORK -->
+  <text x="340" y="28" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="10" fill="#b87520" letter-spacing="3">01 · WORK</text>
+
+  <rect x="80" y="44" width="150" height="52" rx="5" fill="#faf8f5" stroke="#d0c8b8" stroke-width="0.8"/>
+  <text x="155" y="66" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" font-weight="500" fill="#5a5a5a">Skills</text>
+  <text x="155" y="83" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#9a9a9a">context for the LLM</text>
+
+  <line x1="238" y1="70" x2="270" y2="70" stroke="#b0b0b0" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+  <rect x="278" y="44" width="150" height="52" rx="5" fill="#faf8f5" stroke="#d0c8b8" stroke-width="0.8"/>
+  <text x="353" y="66" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" font-weight="500" fill="#5a5a5a">Main LLM</text>
+  <text x="353" y="83" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#9a9a9a">generates your code</text>
+
+  <line x1="436" y1="70" x2="468" y2="70" stroke="#b0b0b0" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+  <rect x="476" y="44" width="150" height="52" rx="5" fill="#faf8f5" stroke="#d0c8b8" stroke-width="0.8"/>
+  <text x="551" y="66" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" font-weight="500" fill="#5a5a5a">Your code</text>
+  <text x="551" y="83" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#9a9a9a">+ session trace (.jsonl)</text>
+
+  <!-- Arrow down from code to guardian -->
+  <line x1="551" y1="102" x2="551" y2="210" stroke="#b0b0b0" stroke-width="0.8"/>
+  <line x1="551" y1="210" x2="524" y2="210" stroke="#b0b0b0" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+  <!-- Phase 2: REVIEW -->
+  <text x="340" y="148" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="10" fill="#b87520" letter-spacing="3">02 · GUARDIAN</text>
+
+  <rect x="160" y="162" width="360" height="96" rx="5" fill="none" stroke="#b87520" stroke-width="1"/>
+  <text x="340" y="186" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#8a6030">Guardian</text>
+  <text x="340" y="205" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="10" fill="#9a9a9a">L1 — Code review: validates against skill knowledge</text>
+  <text x="340" y="220" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="10" fill="#9a9a9a">L2 — Trace analysis: compiles .jsonl via VCC</text>
+  <text x="340" y="248" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="9" fill="#b0b0b0">L1 can escalate to L2 · user can invoke L2 directly</text>
+
+  <!-- Two arrows diverging down from guardian -->
+  <path d="M 280 264 L 230 298" fill="none" stroke="#b0b0b0" stroke-width="0.8" marker-end="url(#arrow)"/>
+  <path d="M 420 264 L 470 298" fill="none" stroke="#b0b0b0" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+  <!-- Phase 3: IMPROVE -->
+  <text x="340" y="316" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="10" fill="#b87520" letter-spacing="3">03 · IMPROVE</text>
+
+  <rect x="105" y="330" width="200" height="52" rx="5" fill="#faf8f5" stroke="#d0c8b8" stroke-width="0.8"/>
+  <text x="205" y="352" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" font-weight="500" fill="#5a5a5a">Skills patched</text>
+  <text x="205" y="369" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#9a9a9a">better LLM context</text>
+
+  <rect x="395" y="330" width="200" height="52" rx="5" fill="#faf8f5" stroke="#d0c8b8" stroke-width="0.8"/>
+  <text x="495" y="352" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" font-weight="500" fill="#5a5a5a">Guardian sharpened</text>
+  <text x="495" y="369" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#9a9a9a">new checks &amp; grep patterns</text>
+
+  <!-- Loop-back: Guardian sharpened → Guardian (self-improvement) -->
+  <path d="M 601 356 L 640 356 L 640 210 L 524 210" fill="none" stroke="#b87520" stroke-width="0.8" stroke-dasharray="3 4" stroke-linejoin="round" marker-end="url(#arrow)"/>
+
+  <!-- Loop-back: Skills patched → Skills (next session) -->
+  <path d="M 105 356 L 56 356 L 56 70 L 72 70" fill="none" stroke="#b87520" stroke-width="0.8" stroke-dasharray="3 4" stroke-linejoin="round" marker-end="url(#arrow)"/>
+  <text x="48" y="210" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="9" fill="#b87520" letter-spacing="2" transform="rotate(-90 48 210)">NEXT SESSION</text>
+
+  <!-- Tagline -->
+  <text x="340" y="440" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="12" fill="#9a8c72">fabricando fit faber — by making, one becomes a maker</text>
+</svg>

@@ -37,7 +37,7 @@ feedback layers** on top of it.
 
 > **Guardian agents are handled by `guardian-nurturer`** — the core framework
 > agent. After you finish building skills, tell the user to invoke
-> `guardian-nurturer` to create a self-improving guardian for those skills.
+> `guardian-nurturer` to create a continuously improving guardian for those skills.
 >
 > **APM packaging is handled by `agent-packager`** — a separate agent with
 > the APM skills preloaded.
@@ -317,7 +317,7 @@ Deliver:
 
 After skills are finalized, tell the user:
 
-> "Skills are ready. To create a self-improving guardian for them, invoke
+> "Skills are ready. To create a continuously improving guardian for them, invoke
 > `guardian-nurturer` — it will analyze the skills, generate a tailored
 > guardian agent with VCC trace analysis, and set up the self-improvement
 > loop."
