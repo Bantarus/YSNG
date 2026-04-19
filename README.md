@@ -4,7 +4,7 @@
 
 A framework that creates continuously improving guardian agents for your Claude Code skills. The guardian reviews your code, analyses your session reasoning via VCC, patches your skills when it finds gaps, and sharpens its own eye with every use under your supervision. Three things improve simultaneously: the skills, the guardian, and your workflow.
 
-You already have skills. But are they getting better?
+You already have skills. But are they getting better? Is your main agent using them right?
 
 ---
 
@@ -14,7 +14,9 @@ You already have skills. But are they getting better?
   <img src="docs/feedback-loop.svg" alt="Three-phase feedback loop: work, review, improve" width="100%">
 </p>
 
-You work with your main LLM while skills provide context. The guardian has two levels:
+Your main LLM agent implements features using skills as context. The guardian is a **separate agent** that never implements code — it only reviews, validates, and improves the skills that your main agent relies on. It runs in its own isolated context to avoid reasoning collusion with the main agent.
+
+The guardian has two levels:
 
 - **L1 — Code review**: validates your code against the preloaded skill knowledge. Catches API misuse, hallucinated methods, lifecycle errors.
 - **L2 — Trace analysis**: compiles the session's JSONL reasoning trace via VCC, identifies skill gaps, patches the skills, and sharpens its own checklist and grep patterns.
@@ -41,15 +43,17 @@ The framework has four agents with distinct roles:
 ## The guardian — a continuously improving quality gate
 
 <p align="center">
-  <img src="docs/guardian-modes.svg" alt="The guardian's two modes: code review and trace analysis" width="100%">
+  <img src="docs/guardian-modes.svg" alt="The guardian's two levels: code review and trace analysis" width="100%">
 </p>
+
+The guardian does **not** implement features — that's your main agent's job. The guardian runs in an **isolated context** with the full skill documentation preloaded, so its reasoning stays clean and focused on correctness. This separation prevents the noise of implementation work from affecting quality judgement.
 
 Each guardian carries two types of checks:
 
 - **Base checks** — derived from skills. Editable when the skills are corrected.
 - **Learned checks** — accumulated through trace analysis. Append-only.
 
-Both the skills and the guardian improve through use. Level 2 produces a skill gap analysis with concrete patches, CLAUDE.md recommendations, guardian self-updates (new checklist items and VCC grep patterns), and ecosystem growth — commands, scripts, hooks, and analysis tools that the guardian creates when it spots repeated patterns.
+Both the skills and the guardian improve through use. L2 produces a skill gap analysis with concrete patches, CLAUDE.md recommendations, guardian self-updates (new checklist items and VCC grep patterns), and ecosystem growth — commands, scripts, hooks, and analysis tools that the guardian creates when it spots repeated patterns.
 
 ---
 
